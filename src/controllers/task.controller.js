@@ -1,15 +1,15 @@
-import { asyncHandler } from "../utils/asyncHandler";
-import { ApiError } from "../utils/ApiError";
-import { ApiResponse } from "../utils/ApiResponse";
-import { Task } from "../models/task.model";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { Task } from "../models/task.model.js";
 
-const addTask = asyncHandler(async() => {
-    const {task} = req.body;
-    if(!task){
+const addTask = asyncHandler(async(req,res) => {
+    const { title } = req.body;
+    if(!title){
         throw new ApiError(400,"Task Doesn't add successfully")
     }
 
-    const newTask = await Task.create({task});
+    const newTask = await Task.create({ title });
     console.log("Task added successfully");
 
     return res
@@ -24,7 +24,7 @@ const addTask = asyncHandler(async() => {
     
 })
 
-const removeTask = asyncHandler(async() => {
+const removeTask = asyncHandler(async(req,res) => {
     const { id } = req.params;
     
     const findTask = await Task.findById(id)
@@ -51,7 +51,7 @@ const updateTask = asyncHandler(async(req,res) => {
     const {id} = req.params;
     const {title,completed} = req.body;
 
-    if(!title || ! completed){
+    if(!title || !completed){
         throw new ApiError(400 ," All Fields are required")
     }
 
