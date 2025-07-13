@@ -4,12 +4,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Task } from "../models/task.model.js";
 
 const addTask = asyncHandler(async(req,res) => {
-    const { title } = req.body;
+    const { title,completed } = req.body;
     if(!title){
         throw new ApiError(400,"Task Doesn't add successfully")
     }
 
-    const newTask = await Task.create({ title });
+    const newTask = await Task.create({ title, completed });
     console.log("Task added successfully");
 
     return res
